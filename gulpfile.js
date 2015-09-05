@@ -1,6 +1,7 @@
 
 var gulp = require('gulp');
 var del = require('del');
+var concat = require('gulp-concat');
 
 gulp.task('default', ['mytask1'], function() {
   console.log('Hello, Gulp!');
@@ -40,9 +41,24 @@ gulp.task('output_after_clean', ['clean'], function() {
 });// 輸出於 output2/bootstrap
 // clean
 gulp.task('clean', function(cb) {
-  del(['output2/bootstrap/**', '!output2/bootstrap']).then(function(paths){
+  del(['output2/**', '!output2/']).then(function(paths){
     console.log(paths.join('\n'));
   }).then(cb);
 });
 
+// watch 間聽事件 若目標檔案有變更則執行動作
+gulp.task('watch', function() {
+  gulp.watch(['assets/vendor/bootstrap/**/*.js'], ['output_after_clean'], function(event){
+    console.log(event)
+  })
+});
+
+gulp.task('concat-app', function() {
+  gulp.src(['app/**/*.js','!app/**/*.module.js'])
+    .pipe(concat('app.buildes.js'))
+    .pipe(gulp.dest('assets'));
+  gulp.src(['app/**/*.module.js'])
+    .pipe(concat('app.modules.js'))
+    .pipe(gulp.dest('assets'));
+});
 
