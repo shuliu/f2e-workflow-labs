@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/shuliu/f2e-workflow-labs#readme",
   "dependencies": {
+    "del": "^2.0.1",
     "jquery": "^1.11.3",
     "lodash": "^3.10.1"
   },
